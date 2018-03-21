@@ -19,103 +19,113 @@ import com.mygdx.messages.MessageManager;
 
 public class CollisionSystem extends IteratingSystem {
 
-    private ComponentMapper<TransformComponent> tc = ComponentMapper.getFor(TransformComponent.class);
-    private ComponentMapper<CollisionComponent> cc = ComponentMapper.getFor(CollisionComponent.class);
+	private ComponentMapper<TransformComponent> tc = ComponentMapper
+			.getFor(TransformComponent.class);
+	private ComponentMapper<CollisionComponent> cc = ComponentMapper
+			.getFor(CollisionComponent.class);
 
+	int width = Gdx.graphics.getWidth();
+	int height = Gdx.graphics.getHeight();
+	Engine engine;
 
-    int width = Gdx.graphics.getWidth();
-    int height = Gdx.graphics.getHeight();
-    Engine engine;
+	private ImmutableArray<Entity> entities;
 
-    private ImmutableArray<Entity> entities;
+	// private Family family = Family.all(TransformComponent.class,
+	// CollisionComponent.class).get();
 
-    //private Family family = Family.all(TransformComponent.class, CollisionComponent.class).get();
+	public CollisionSystem(Family family) {
+		super(family);
+	}
 
+	public CollisionSystem(Family family, int priority) {
+		super(family, priority);
+	}
 
-    public CollisionSystem(Family family) {
-        super(family);
-    }
+	public void update(float deltaTime) {
 
-    public CollisionSystem(Family family, int priority) {
-        super(family, priority);
-    }
+		for (int i = 0; i < entities.size(); i++) {
+			Entity entity1 = entities.get(i);
+			CollisionComponent c = cc.get(entity1);
+			for (int j = i + 1; j < entities.size(); j++) {
+				Entity entity2 = entities.get(j);
+				CollisionComponent c2 = cc.get(entity2);
+				// when entities colliding
+				if (testEntities(entity1, entity2)) {
+					if (!c.getCollision() || !c2.getCollision()) {
+						MessageManager.getInstance().dispatchMessage(null,
+								CollisionPhysicsMsg.MSG_ID,
+								new CollisionPhysicsMsg(entity1, entity2));
+						MessageManager.getInstance().dispatchMessage(null,
+								CollisionMsg.MSG_ID,
+								new CollisionMsg(entity1, entity2));
+						printCollisionInfo(entity1, entity2);
+					}
+				} else {
+					// collision physics
+					if (testDistance(entity1, entity2, c.getRadius(),
+							c2.getRadius())) {
+						MessageManager.getInstance().dispatchMessage(null,
+								CollisionPhysicsMsg.MSG_ID,
+								new CollisionPhysicsMsg(entity1, entity2));
+					}
+				}
 
-    public void update(float deltaTime) {
+			}
+		}
+		// super.update(deltaTime);
+	}
 
-        for(int i = 0; i < entities.size(); i++){
-            Entity entity1 = entities.get(i);
-            CollisionComponent c = cc.get(entity1);
-            for(int j = i + 1; j < entities.size(); j++){
-                Entity entity2 = entities.get(j);
-                CollisionComponent c2 = cc.get(entity2);
-                //when entities colliding
-                if(testEntities(entity1, entity2)){
-                    if(!c.getCollision() || !c2.getCollision()) {
-                        MessageManager.getInstance().dispatchMessage(null,
-                                CollisionPhysicsMsg.MSG_ID, new CollisionPhysicsMsg(entity1, entity2));
-                        MessageManager.getInstance().dispatchMessage(null,
-                                CollisionMsg.MSG_ID, new CollisionMsg(entity1, entity2));
-                        printCollisionInfo(entity1, entity2);
-                    }
-                } else {
-                    //collision physics
-                    if(testDistance(entity1, entity2, c.getRadius(), c2.getRadius())){
-                        MessageManager.getInstance().dispatchMessage(null,
-                                CollisionPhysicsMsg.MSG_ID, new CollisionPhysicsMsg(entity1, entity2));
-                    }
-                }
+	@Override
+	protected void processEntity(Entity entity, float deltaTime) {
+	}
 
-            }
-        }
-        //super.update(deltaTime);
-    }
+	@Override
+	public void addedToEngine(Engine engine) {
+		this.engine = engine;
+		entities = engine.getEntities();
+	}
 
-    @Override
-    protected void processEntity(Entity entity, float deltaTime) {
-    }
+	private void printCollisionInfo(Entity entity1, Entity entity2) {
+		CollisionComponent c = cc.get(entity1);
+		CollisionComponent c2 = cc.get(entity2);
+		System.out.println("Collision detected between " + c.getName()
+				+ " and " + c2.getName());
+	}
 
-    @Override
-    public void addedToEngine(Engine engine) {
-        this.engine = engine;
-        entities = engine.getEntities();
-    }
+	private boolean testEntities(Entity entity1, Entity entity2) {
 
-    private void printCollisionInfo(Entity entity1, Entity entity2){
-        CollisionComponent c = cc.get(entity1);
-        CollisionComponent c2 = cc.get(entity2);
-        System.out.println("Collision detected between " + c.getName() + " and " + c2.getName());
-    }
+		CollisionComponent c = cc.get(entity1);
+		CollisionComponent c2 = cc.get(entity2);
 
-    private boolean testEntities(Entity entity1, Entity entity2){
+		// Check whether entities can collide
+		if (((c.getGroup() & c2.getMask()) != 0)
+				&& ((c2.getGroup() & c.getMask()) != 0)) {
 
-        CollisionComponent c = cc.get(entity1);
-        CollisionComponent c2 = cc.get(entity2);
+			return testDistance(entity1, entity2, c.getRadius(), c2.getRadius());
 
-        //Check whether entities can collide
-        if(((c.getGroup() & c2.getMask()) != 0) && ((c2.getGroup() & c.getMask()) != 0)) {
+		}
 
-            return testDistance(entity1, entity2, c.getRadius(), c2.getRadius());
+		return false;
+	}
 
-        }
+	private boolean testDistance(Entity entity1, Entity entity2, float r1,
+			float r2) {
 
-        return false;
-    }
+		TransformComponent pos = tc.get(entity1);
+		TransformComponent pos2 = tc.get(entity2);
 
-    private boolean testDistance(Entity entity1, Entity entity2, float r1, float r2) {
+		float xDistPow2 = ((pos.getPos().x - pos2.getPos().x) * (pos.getPos().x - pos2
+				.getPos().x));
+		float yDistPow2 = ((pos.getPos().y - pos2.getPos().y) * (pos.getPos().y - pos2
+				.getPos().y));
+		float distance = r1 + r2;
 
-        TransformComponent pos = tc.get(entity1);
-        TransformComponent pos2 = tc.get(entity2);
-
-        float xDistPow2 = ((pos.getPos().x - pos2.getPos().x) * (pos.getPos().x - pos2.getPos().x));
-        float yDistPow2 = ((pos.getPos().y - pos2.getPos().y) * (pos.getPos().y - pos2.getPos().y));
-        float distance = r1 + r2;
-
-        //if distance between the midpoints of the entities is smaller
-        // than the sum of collision circle's radii
-        if (distance >= Math.sqrt(xDistPow2 + yDistPow2)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+		// if distance between the midpoints of the entities is smaller
+		// than the sum of collision circle's radii
+		if (distance >= Math.sqrt(xDistPow2 + yDistPow2)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

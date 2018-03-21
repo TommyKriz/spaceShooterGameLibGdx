@@ -8,14 +8,14 @@ import com.badlogic.ashley.core.Component;
 
 public class AsteroidComponent implements Component {
 
-    private int size; //1, 2
+	private int size; // 1, 2
 
-    public int getSize() {
-        return size;
-    }
+	public int getSize() {
+		return size;
+	}
 
-    public void setSize(int size){
-        this.size = size;
-    }
+	public void setSize(int size) {
+		this.size = size;
+	}
 
 }

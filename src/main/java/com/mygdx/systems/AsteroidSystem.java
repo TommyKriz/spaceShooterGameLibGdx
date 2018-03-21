@@ -21,61 +21,67 @@ import com.mygdx.messages.MessageManager;
 
 public class AsteroidSystem extends IteratingSystem implements Telegraph {
 
-    private ComponentMapper<MovementComponent> mc = ComponentMapper.getFor(MovementComponent.class);
-    private ComponentMapper<TransformComponent> tc = ComponentMapper.getFor(TransformComponent.class);
-    private ComponentMapper<AsteroidComponent> ac = ComponentMapper.getFor(AsteroidComponent.class);
+	private ComponentMapper<MovementComponent> mc = ComponentMapper
+			.getFor(MovementComponent.class);
+	private ComponentMapper<TransformComponent> tc = ComponentMapper
+			.getFor(TransformComponent.class);
+	private ComponentMapper<AsteroidComponent> ac = ComponentMapper
+			.getFor(AsteroidComponent.class);
 
-    Texture asteroid_small_texture = new Texture("asteroid_small.png");
+	Texture asteroid_small_texture = new Texture("asteroid_small.png");
 
-    public AsteroidSystem(Family family) {
-        super(family);
-    }
+	public AsteroidSystem(Family family) {
+		super(family);
+	}
 
-    @Override
-    protected void processEntity(Entity entity, float deltaTime) {
+	@Override
+	protected void processEntity(Entity entity, float deltaTime) {
 
-    }
+	}
 
-    private void destroyAsteroid(Entity entity) {
+	private void destroyAsteroid(Entity entity) {
 
-        AsteroidComponent asteroid = ac.get(entity);
-        TransformComponent transform = tc.get(entity);
-        MovementComponent movement = mc.get(entity);
+		AsteroidComponent asteroid = ac.get(entity);
+		TransformComponent transform = tc.get(entity);
+		MovementComponent movement = mc.get(entity);
 
-        if (asteroid.getSize() == 2) {
+		if (asteroid.getSize() == 2) {
 
-            World.createSmallAsteroid(getEngine(), asteroid_small_texture, 0, transform.getPos().cpy(), movement.getVel().cpy());
-            World.createSmallAsteroid(getEngine(), asteroid_small_texture, 90, transform.getPos().cpy(), movement.getVel().cpy());
-            World.createSmallAsteroid(getEngine(), asteroid_small_texture, 180, transform.getPos().cpy(), movement.getVel().cpy());
-            World.createSmallAsteroid(getEngine(), asteroid_small_texture, 270, transform.getPos().cpy(), movement.getVel().cpy());
+			World.createSmallAsteroid(getEngine(), asteroid_small_texture, 0,
+					transform.getPos().cpy(), movement.getVel().cpy());
+			World.createSmallAsteroid(getEngine(), asteroid_small_texture, 90,
+					transform.getPos().cpy(), movement.getVel().cpy());
+			World.createSmallAsteroid(getEngine(), asteroid_small_texture, 180,
+					transform.getPos().cpy(), movement.getVel().cpy());
+			World.createSmallAsteroid(getEngine(), asteroid_small_texture, 270,
+					transform.getPos().cpy(), movement.getVel().cpy());
 
-        }
+		}
 
-        getEngine().removeEntity(entity);
+		getEngine().removeEntity(entity);
 
+	}
 
-    }
+	private boolean isAsteroid(Entity entity) {
+		return ac.has(entity);
+	}
 
-    private boolean isAsteroid(Entity entity) {
-        return ac.has(entity);
-    }
+	@Override
+	public boolean handleMessage(Telegram msg) {
+		CollisionMsg data = (CollisionMsg) msg.extraInfo;
 
-    @Override
-    public boolean handleMessage(Telegram msg) {
-        CollisionMsg data = (CollisionMsg)msg.extraInfo;
+		if (isAsteroid(data.getFirst())) {
+			destroyAsteroid(data.getFirst());
+		}
+		if (isAsteroid(data.getSecond())) {
+			destroyAsteroid(data.getSecond());
+		}
 
-        if (isAsteroid(data.getFirst())) {
-            destroyAsteroid(data.getFirst());
-        }
-        if (isAsteroid( data.getSecond())) {
-            destroyAsteroid(data.getSecond());
-        }
+		return true;
+	}
 
-        return true;
-    }
-
-    public void addedToEngine(Engine engine) {
-        super.addedToEngine(engine);
-        MessageManager.getInstance().addListener(this, CollisionMsg.MSG_ID);
-    }
+	public void addedToEngine(Engine engine) {
+		super.addedToEngine(engine);
+		MessageManager.getInstance().addListener(this, CollisionMsg.MSG_ID);
+	}
 }

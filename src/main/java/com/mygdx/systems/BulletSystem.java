@@ -19,49 +19,50 @@ import com.mygdx.messages.MessageManager;
 
 public class BulletSystem extends IteratingSystem implements Telegraph {
 
-    private ComponentMapper<BulletComponent> bc = ComponentMapper.getFor(BulletComponent.class);
+	private ComponentMapper<BulletComponent> bc = ComponentMapper
+			.getFor(BulletComponent.class);
 
-    public BulletSystem(Family family) {
-        super(family);
-    }
+	public BulletSystem(Family family) {
+		super(family);
+	}
 
-    @Override
-    protected void processEntity(Entity entity, float deltaTime) {
-        BulletComponent bullet = bc.get(entity);
+	@Override
+	protected void processEntity(Entity entity, float deltaTime) {
+		BulletComponent bullet = bc.get(entity);
 
-        if(bullet.getLifeTime() <= 0) {
-            getEngine().removeEntity(entity);
-        } else {
-            bullet.setLifeTime(bullet.getLifeTime()-1);
-        }
+		if (bullet.getLifeTime() <= 0) {
+			getEngine().removeEntity(entity);
+		} else {
+			bullet.setLifeTime(bullet.getLifeTime() - 1);
+		}
 
-    }
+	}
 
-    private boolean isBullet(Entity entity) {
-        return bc.has(entity);
-    }
+	private boolean isBullet(Entity entity) {
+		return bc.has(entity);
+	}
 
-    @Override
-    public boolean handleMessage(Telegram msg) {
+	@Override
+	public boolean handleMessage(Telegram msg) {
 
-        CollisionMsg data = (CollisionMsg)msg.extraInfo;
+		CollisionMsg data = (CollisionMsg) msg.extraInfo;
 
-        if (isBullet(data.getFirst())) {
-            destroyBullet(data.getFirst());
-        }
-        if (isBullet(data.getSecond())) {
-            destroyBullet(data.getSecond());
-        }
+		if (isBullet(data.getFirst())) {
+			destroyBullet(data.getFirst());
+		}
+		if (isBullet(data.getSecond())) {
+			destroyBullet(data.getSecond());
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    private void destroyBullet(Entity entity) {
-        getEngine().removeEntity(entity);
-    }
+	private void destroyBullet(Entity entity) {
+		getEngine().removeEntity(entity);
+	}
 
-    public void addedToEngine(Engine engine) {
-        super.addedToEngine(engine);
-        MessageManager.getInstance().addListener(this, CollisionMsg.MSG_ID);
-    }
+	public void addedToEngine(Engine engine) {
+		super.addedToEngine(engine);
+		MessageManager.getInstance().addListener(this, CollisionMsg.MSG_ID);
+	}
 }

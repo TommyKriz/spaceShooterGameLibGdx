@@ -9,53 +9,58 @@ import com.badlogic.gdx.graphics.Color;
 
 public class CollisionComponent implements Component {
 
-    private String name;
-    private Color color;
-    private float radius;
-    private int group;
-    private int mask;
-    private boolean collision = false;
+	private String name;
+	private Color color;
+	private float radius;
+	private int group;
+	private int mask;
+	private boolean collision = false;
 
+	public void setRadius(float f) {
+		this.radius = f;
+	}
 
-    public void setRadius(float f){
-        this.radius = f;
-    }
-    public float getRadius(){
-        return this.radius;
-    }
+	public float getRadius() {
+		return this.radius;
+	}
 
-    public void setColor(Color c){
-        this.color = c;
-    }
-    public Color getColor(){
-        return this.color;
-    }
+	public void setColor(Color c) {
+		this.color = c;
+	}
 
-    public void setName(String name){
-        this.name = name;
-    }
+	public Color getColor() {
+		return this.color;
+	}
 
-    public String getName(){
-        return this.name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setGroup(int group){
-        this.group = group;
-    }
-    public int getGroup(){
-        return this.group;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    public void setMask(int mask){
-        this.mask = mask;
-    }
-    public int getMask(){
-        return this.mask;
-    }
-    public void setCollision(boolean bool){
-        this.collision = bool;
-    }
-    public boolean getCollision(){
-        return this.collision;
-    }
+	public void setGroup(int group) {
+		this.group = group;
+	}
+
+	public int getGroup() {
+		return this.group;
+	}
+
+	public void setMask(int mask) {
+		this.mask = mask;
+	}
+
+	public int getMask() {
+		return this.mask;
+	}
+
+	public void setCollision(boolean bool) {
+		this.collision = bool;
+	}
+
+	public boolean getCollision() {
+		return this.collision;
+	}
 }

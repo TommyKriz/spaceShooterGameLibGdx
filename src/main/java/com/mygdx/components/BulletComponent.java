@@ -7,14 +7,14 @@ import com.badlogic.ashley.core.Component;
  */
 
 public class BulletComponent implements Component {
-    private int lifeTime;
+	private int lifeTime;
 
-    public int getLifeTime() {
-        return lifeTime;
-    }
+	public int getLifeTime() {
+		return lifeTime;
+	}
 
-    public void setLifeTime(int lifeTime) {
-        this.lifeTime = lifeTime;
-    }
+	public void setLifeTime(int lifeTime) {
+		this.lifeTime = lifeTime;
+	}
 
 }

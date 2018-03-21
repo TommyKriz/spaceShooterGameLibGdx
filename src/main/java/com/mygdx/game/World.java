@@ -20,240 +20,250 @@ import com.mygdx.components.VisualComponent;
 
 public class World {
 
-    private static Vector2 center = new Vector2(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+	private static Vector2 center = new Vector2(Gdx.graphics.getWidth() / 2,
+			Gdx.graphics.getHeight() / 2);
 
-    public static void createShip(Engine engine, Texture ship_texture) {
+	public static void createShip(Engine engine, Texture ship_texture) {
 
-        //Player01
-        ShipComponent sc_01 = new ShipComponent();
-        TransformComponent tc_01 = new TransformComponent();
-        MovementComponent mc_01 = new MovementComponent();
-        VisualComponent vc_01 = new VisualComponent();
-        CollisionComponent cc_01 = new CollisionComponent();
+		// Player01
+		ShipComponent sc_01 = new ShipComponent();
+		TransformComponent tc_01 = new TransformComponent();
+		MovementComponent mc_01 = new MovementComponent();
+		VisualComponent vc_01 = new VisualComponent();
+		CollisionComponent cc_01 = new CollisionComponent();
 
-        //set angle
-        tc_01.setAngle(0);
+		// set angle
+		tc_01.setAngle(0);
 
-        //set position
+		// set position
 
-        Vector2 vec2 = new Vector2(center.x, center.y);
-        Vector2 offset = new Vector2(30, 0);
-        tc_01.setPos(tc_01.getPos().cpy().add(offset));
+		Vector2 vec2 = new Vector2(center.x, center.y);
+		Vector2 offset = new Vector2(30, 0);
+		tc_01.setPos(tc_01.getPos().cpy().add(offset));
 
-        mc_01.setAngVel(0);
-        mc_01.setVel(new Vector2(0, 0));
-        mc_01.setForce(new Vector2(0, 0));
-        mc_01.setAngAcc(200.0f);
+		mc_01.setAngVel(0);
+		mc_01.setVel(new Vector2(0, 0));
+		mc_01.setForce(new Vector2(0, 0));
+		mc_01.setAngAcc(200.0f);
 
-        sc_01.setKeys(0, 1, 2, 3, 4);
-        sc_01.setBulletCounter(0);
+		sc_01.setKeys(0, 1, 2, 3, 4);
+		sc_01.setBulletCounter(0);
 
-        float[] verticesShip = {
-                0.0f, 25.0f, -20.0f, -20.0f, 0.0f, -14.0f, 20.0f, -20.0f
-        };
+		float[] verticesShip = { 0.0f, 25.0f, -20.0f, -20.0f, 0.0f, -14.0f,
+				20.0f, -20.0f };
 
-        vc_01.setVertices(verticesShip);
-        vc_01.setColor(Color.PINK);
-        vc_01.setImg(ship_texture);
+		vc_01.setVertices(verticesShip);
+		vc_01.setColor(Color.PINK);
+		vc_01.setImg(ship_texture);
 
-        cc_01.setColor(Color.GREEN);
-        cc_01.setRadius(20.0f);
-        cc_01.setName("Player 1");
-        cc_01.setGroup(1);
-        //Collision with astroid(4) and bullet(2)
-        cc_01.setMask(3);
+		cc_01.setColor(Color.GREEN);
+		cc_01.setRadius(20.0f);
+		cc_01.setName("Player 1");
+		cc_01.setGroup(1);
+		// Collision with astroid(4) and bullet(2)
+		cc_01.setMask(3);
 
-        Entity player01_entity = new Entity();
-        player01_entity.add(sc_01);
-        player01_entity.add(tc_01);
-        player01_entity.add(vc_01);
-        player01_entity.add(mc_01);
-        player01_entity.add(cc_01);
-        engine.addEntity(player01_entity);
-    }
-    public static void createShip2(Engine engine, Texture ship_texture) {
+		Entity player01_entity = new Entity();
+		player01_entity.add(sc_01);
+		player01_entity.add(tc_01);
+		player01_entity.add(vc_01);
+		player01_entity.add(mc_01);
+		player01_entity.add(cc_01);
+		engine.addEntity(player01_entity);
+	}
 
-        //Player02
-        ShipComponent sc_02 = new ShipComponent();
-        TransformComponent tc_02 = new TransformComponent();
-        MovementComponent mc_02 = new MovementComponent();
-        VisualComponent vc_02 = new VisualComponent();
-        CollisionComponent cc_02 = new CollisionComponent();
+	public static void createShip2(Engine engine, Texture ship_texture) {
 
-        //set angle
-        tc_02.setAngle(0);
+		// Player02
+		ShipComponent sc_02 = new ShipComponent();
+		TransformComponent tc_02 = new TransformComponent();
+		MovementComponent mc_02 = new MovementComponent();
+		VisualComponent vc_02 = new VisualComponent();
+		CollisionComponent cc_02 = new CollisionComponent();
 
-        //set position
-        Vector2 vec2 = new Vector2(center.x, center.y);
-        Vector2 offset = new Vector2(-30, 0);
-        tc_02.setPos(tc_02.getPos().cpy().add(offset));
+		// set angle
+		tc_02.setAngle(0);
 
-        mc_02.setAngVel(0);
-        mc_02.setVel(new Vector2(0, 0));
-        mc_02.setForce(new Vector2(0, 0));
-        mc_02.setAngAcc(200.0f);
+		// set position
+		Vector2 vec2 = new Vector2(center.x, center.y);
+		Vector2 offset = new Vector2(-30, 0);
+		tc_02.setPos(tc_02.getPos().cpy().add(offset));
 
-        sc_02.setKeys(5, 6, 7, 8, 9);
-        sc_02.setBulletCounter(0);
+		mc_02.setAngVel(0);
+		mc_02.setVel(new Vector2(0, 0));
+		mc_02.setForce(new Vector2(0, 0));
+		mc_02.setAngAcc(200.0f);
 
-        float[] verticesShip = {
-                0.0f, 25.0f, -20.0f, -20.0f, 0.0f, -14.0f, 20.0f, -20.0f
-        };
+		sc_02.setKeys(5, 6, 7, 8, 9);
+		sc_02.setBulletCounter(0);
 
-        vc_02.setVertices(verticesShip);
-        vc_02.setColor(Color.RED);
-        vc_02.setImg(ship_texture);
+		float[] verticesShip = { 0.0f, 25.0f, -20.0f, -20.0f, 0.0f, -14.0f,
+				20.0f, -20.0f };
 
-        cc_02.setColor(Color.YELLOW);
-        cc_02.setRadius(20.0f);
-        cc_02.setName("Player 2");
-        cc_02.setGroup(1);
-        //Collision with astroid(4) and bullet(2)
-        cc_02.setMask(6);
+		vc_02.setVertices(verticesShip);
+		vc_02.setColor(Color.RED);
+		vc_02.setImg(ship_texture);
 
-        Entity player02_entity = new Entity();
-        player02_entity.add(sc_02);
-        player02_entity.add(tc_02);
-        player02_entity.add(vc_02);
-        player02_entity.add(mc_02);
-        player02_entity.add(cc_02);
-        engine.addEntity(player02_entity);
+		cc_02.setColor(Color.YELLOW);
+		cc_02.setRadius(20.0f);
+		cc_02.setName("Player 2");
+		cc_02.setGroup(1);
+		// Collision with astroid(4) and bullet(2)
+		cc_02.setMask(6);
 
-    }
-    public static void createAsteroid(Engine engine, Texture asteroid_texture, Vector2 pos){
-        VisualComponent vc = new VisualComponent();
-        MovementComponent mc = new MovementComponent();
-        TransformComponent tc = new TransformComponent();
-        CollisionComponent cc = new CollisionComponent();
-        AsteroidComponent ac = new AsteroidComponent();//(1, new Vector2(0, 1), 2);
+		Entity player02_entity = new Entity();
+		player02_entity.add(sc_02);
+		player02_entity.add(tc_02);
+		player02_entity.add(vc_02);
+		player02_entity.add(mc_02);
+		player02_entity.add(cc_02);
+		engine.addEntity(player02_entity);
 
-        int x = (int) pos.x;
-        int y = (int) pos.y;
-        int ang = (int) (Math.random() * 360);
+	}
 
-        cc.setColor(Color.WHITE);
-        cc.setRadius(20.0f);
-        cc.setGroup(4);
-        //Collision with bullet(2)
-        cc.setMask(2);
-        cc.setName("Big Asteroid");
+	public static void createAsteroid(Engine engine, Texture asteroid_texture,
+			Vector2 pos) {
+		VisualComponent vc = new VisualComponent();
+		MovementComponent mc = new MovementComponent();
+		TransformComponent tc = new TransformComponent();
+		CollisionComponent cc = new CollisionComponent();
+		AsteroidComponent ac = new AsteroidComponent();// (1, new Vector2(0, 1),
+														// 2);
 
-        tc.setAngle(ang);
-        Vector2 vec2 = new Vector2(x, y);
-        tc.setPos(vec2);
+		int x = (int) pos.x;
+		int y = (int) pos.y;
+		int ang = (int) (Math.random() * 360);
 
-        mc.setForce(new Vector2(0, 20.0f).rotate(ang));
-        mc.setVel(new Vector2(0, 1).add(mc.getForce()));
-        mc.setPhysicsInfluence(0.0f);
+		cc.setColor(Color.WHITE);
+		cc.setRadius(20.0f);
+		cc.setGroup(4);
+		// Collision with bullet(2)
+		cc.setMask(2);
+		cc.setName("Big Asteroid");
 
-        vc.setColor(Color.VIOLET);
-        float[] verticesAsteroid = {
-                15.0f, 15.0f, 0.0f, 20.0f, -15.0f, 15.0f, -20.0f, 0.0f, -15.0f, -15.0f, 0.0f, -20.0f, 15.0f, -15.0f, 20.0f, 0.0f//um Nullpunkt zeichnen
-        };
-        vc.setVertices(verticesAsteroid);
-        vc.setImg(asteroid_texture);
+		tc.setAngle(ang);
+		Vector2 vec2 = new Vector2(x, y);
+		tc.setPos(vec2);
 
-        ac.setSize(2);
+		mc.setForce(new Vector2(0, 20.0f).rotate(ang));
+		mc.setVel(new Vector2(0, 1).add(mc.getForce()));
+		mc.setPhysicsInfluence(0.0f);
 
-        Entity asteroid = new Entity();
+		vc.setColor(Color.VIOLET);
+		float[] verticesAsteroid = { 15.0f, 15.0f, 0.0f, 20.0f, -15.0f, 15.0f,
+				-20.0f, 0.0f, -15.0f, -15.0f, 0.0f, -20.0f, 15.0f, -15.0f,
+				20.0f, 0.0f // um Nullpunkt zeichnen
+		};
+		vc.setVertices(verticesAsteroid);
+		vc.setImg(asteroid_texture);
 
-        asteroid.add(ac);
-        asteroid.add(vc);
-        asteroid.add(tc);
-        asteroid.add(mc);
-        asteroid.add(cc);
+		ac.setSize(2);
 
-        engine.addEntity(asteroid);
-    }
-    public static void createSmallAsteroid(Engine engine, Texture asteroid_texture_small, float angle, Vector2 position, Vector2 velocity) {
-        VisualComponent vc = new VisualComponent();
-        MovementComponent mc = new MovementComponent();
-        TransformComponent tc = new TransformComponent();
-        CollisionComponent cc = new CollisionComponent();
-        AsteroidComponent ac = new AsteroidComponent();//(2, new Vector2(0, 1), 1);
+		Entity asteroid = new Entity();
 
-        cc.setColor(Color.WHITE);
-        cc.setRadius(10.0f);
-        cc.setGroup(4);
-        //collision with and bullet(2)
-        cc.setMask(2);
-        cc.setName("Small Asteroid");
+		asteroid.add(ac);
+		asteroid.add(vc);
+		asteroid.add(tc);
+		asteroid.add(mc);
+		asteroid.add(cc);
 
-        tc.setAngle(angle);
-        tc.setPos(position.add(new Vector2(0, 20).rotate(angle+45.0f)));
+		engine.addEntity(asteroid);
+	}
 
-        mc.setForce(new Vector2(0, 10).rotate(angle+45.0f*(float)Math.random()));
-        mc.setVel(velocity.add(mc.getForce()));
-        mc.setPhysicsInfluence(0.0f);
+	public static void createSmallAsteroid(Engine engine,
+			Texture asteroid_texture_small, float angle, Vector2 position,
+			Vector2 velocity) {
+		VisualComponent vc = new VisualComponent();
+		MovementComponent mc = new MovementComponent();
+		TransformComponent tc = new TransformComponent();
+		CollisionComponent cc = new CollisionComponent();
+		AsteroidComponent ac = new AsteroidComponent();// (2, new Vector2(0, 1),
+														// 1);
 
-        vc.setColor(Color.VIOLET);
-        float[] verticesAsteroid = {
-                7.5f, 7.5f, 0.0f, 10.0f, -7.5f, 7.5f, -10.0f, 0.0f, -7.5f, -7.5f, 0.0f, -10.0f, 7.5f, -7.5f, 10.0f, 0.0f//um Nullpunkt zeichnen
-        };
-        vc.setVertices(verticesAsteroid);
-        vc.setImg(asteroid_texture_small);
+		cc.setColor(Color.WHITE);
+		cc.setRadius(10.0f);
+		cc.setGroup(4);
+		// collision with and bullet(2)
+		cc.setMask(2);
+		cc.setName("Small Asteroid");
 
-        ac.setSize(1);
+		tc.setAngle(angle);
+		tc.setPos(position.add(new Vector2(0, 20).rotate(angle + 45.0f)));
 
-        Entity asteroid = new Entity();
+		mc.setForce(new Vector2(0, 10).rotate(angle + 45.0f
+				* (float) Math.random()));
+		mc.setVel(velocity.add(mc.getForce()));
+		mc.setPhysicsInfluence(0.0f);
 
-        asteroid.add(ac);
-        asteroid.add(vc);
-        asteroid.add(tc);
-        asteroid.add(mc);
-        asteroid.add(cc);
+		vc.setColor(Color.VIOLET);
+		float[] verticesAsteroid = { 7.5f, 7.5f, 0.0f, 10.0f, -7.5f, 7.5f,
+				-10.0f, 0.0f, -7.5f, -7.5f, 0.0f, -10.0f, 7.5f, -7.5f, 10.0f,
+				0.0f // um Nullpunkt zeichnen
+		};
+		vc.setVertices(verticesAsteroid);
+		vc.setImg(asteroid_texture_small);
 
-        engine.addEntity(asteroid);
+		ac.setSize(1);
 
-    }
+		Entity asteroid = new Entity();
 
-    public static void createBullet(Engine engine, Texture bullet_texture, float angle, Vector2 transform, Vector2 velocity) {
+		asteroid.add(ac);
+		asteroid.add(vc);
+		asteroid.add(tc);
+		asteroid.add(mc);
+		asteroid.add(cc);
 
-            Entity bullet = new Entity();
+		engine.addEntity(asteroid);
 
-            VisualComponent vc = new VisualComponent();
-            MovementComponent mc = new MovementComponent();
-            TransformComponent tc = new TransformComponent();
-            BulletComponent bc = new BulletComponent();
-            CollisionComponent cc = new CollisionComponent();
+	}
 
-            mc.setVel(velocity);
-            mc.setForce(new Vector2(0, 0));
+	public static void createBullet(Engine engine, Texture bullet_texture,
+			float angle, Vector2 transform, Vector2 velocity) {
 
-            bc.setLifeTime(120);
+		Entity bullet = new Entity();
 
-            cc.setColor(Color.WHITE);
-            cc.setRadius(5.0f);
-            cc.setGroup(2);
-            //collision with astroids(4) and ship(1)
-            cc.setMask(5);
-            cc.setName("Bullet");
+		VisualComponent vc = new VisualComponent();
+		MovementComponent mc = new MovementComponent();
+		TransformComponent tc = new TransformComponent();
+		BulletComponent bc = new BulletComponent();
+		CollisionComponent cc = new CollisionComponent();
 
-            vc.setColor(Color.GREEN);
-            float[] bulletVertices = {
-                0.0f, 5.0f, -5.0f, -2.5f, 0.0f, -5.0f, 5.0f, -2.5f
-             };
-            vc.setVertices(bulletVertices);
-            vc.setImg(bullet_texture);
+		mc.setVel(velocity);
+		mc.setForce(new Vector2(0, 0));
 
-            //offset
-            Vector2 offset = new Vector2(0, 25f);
-            offset.rotate(angle);
+		bc.setLifeTime(120);
 
-            tc.setAngle(angle);
-            tc.setPos(transform.cpy().mulAdd(offset, 1));
+		cc.setColor(Color.WHITE);
+		cc.setRadius(5.0f);
+		cc.setGroup(2);
+		// collision with astroids(4) and ship(1)
+		cc.setMask(5);
+		cc.setName("Bullet");
 
-            mc.setForce(new Vector2(0, 100.0f).rotate(angle));
-            mc.setVel(velocity.add(mc.getForce()));
-            mc.setPhysicsInfluence(0.0f);
+		vc.setColor(Color.GREEN);
+		float[] bulletVertices = { 0.0f, 5.0f, -5.0f, -2.5f, 0.0f, -5.0f, 5.0f,
+				-2.5f };
+		vc.setVertices(bulletVertices);
+		vc.setImg(bullet_texture);
 
-            bullet.add(vc);
-            bullet.add(mc);
-            bullet.add(tc);
-            bullet.add(bc);
-            bullet.add(cc);
+		// offset
+		Vector2 offset = new Vector2(0, 25f);
+		offset.rotate(angle);
 
-            engine.addEntity(bullet);
+		tc.setAngle(angle);
+		tc.setPos(transform.cpy().mulAdd(offset, 1));
 
-    }
+		mc.setForce(new Vector2(0, 100.0f).rotate(angle));
+		mc.setVel(velocity.add(mc.getForce()));
+		mc.setPhysicsInfluence(0.0f);
+
+		bullet.add(vc);
+		bullet.add(mc);
+		bullet.add(tc);
+		bullet.add(bc);
+		bullet.add(cc);
+
+		engine.addEntity(bullet);
+
+	}
 }
