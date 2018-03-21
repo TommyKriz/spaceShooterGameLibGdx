@@ -2,7 +2,6 @@ package com.mygdx.game;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -19,9 +18,6 @@ import com.mygdx.components.VisualComponent;
  */
 
 public class World {
-
-	private static Vector2 center = new Vector2(Gdx.graphics.getWidth() / 2,
-			Gdx.graphics.getHeight() / 2);
 
 	public static void createShip(Engine engine, Texture ship_texture,
 			int posX, int posY, int[] keys, Color colliderColor,

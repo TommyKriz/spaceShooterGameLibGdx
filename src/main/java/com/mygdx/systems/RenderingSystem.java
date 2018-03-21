@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -38,12 +37,6 @@ public class RenderingSystem extends IteratingSystem {
 
 	boolean renderTexture = true;
 	boolean renderColliderCircle = true;
-
-	// RAINBOW COLORS
-	Color purple = new Color(243 / 255f, 135 / 255f, 155 / 255f, 1.0f);
-	Color green = new Color(0f, 165 / 255f, 80 / 255f, 1.0f);
-	Color yellow = new Color(1.0f, 241 / 255f, 0.0f, 1.0f);
-	Color blue = new Color(0f, 173 / 255f, 239 / 255f, 1.0f);
 
 	public RenderingSystem(Family family) {
 		super(family);
