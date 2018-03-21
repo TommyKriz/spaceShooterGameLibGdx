@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -93,8 +94,12 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	private void createEntitesInWorld() {
-		World.createShip(engine, player1_texture);
-		World.createShip2(engine, player2_texture);
+		// TODO: is a different collision mask necessary?
+		World.createShip(engine, player1_texture, 30, 0, new int[] { 0, 1, 2,
+				3, 4 }, Color.YELLOW, "Player 1", 3);
+		World.createShip(engine, player2_texture, -30, 10, new int[] { 5, 6, 7,
+				8, 9 }, Color.PINK, "Player 2", 6);
+
 		World.createAsteroid(engine, asteroid_big_texture,
 				new Vector2(200, 280));
 		World.createAsteroid(engine, asteroid_big_texture, new Vector2(-100,

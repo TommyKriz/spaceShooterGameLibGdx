@@ -23,97 +23,47 @@ public class World {
 	private static Vector2 center = new Vector2(Gdx.graphics.getWidth() / 2,
 			Gdx.graphics.getHeight() / 2);
 
-	public static void createShip(Engine engine, Texture ship_texture) {
+	public static void createShip(Engine engine, Texture ship_texture,
+			int posX, int posY, int[] keys, Color colliderColor,
+			String colliderName, int collisionMask) {
 
-		// Player01
-		ShipComponent sc_01 = new ShipComponent();
-		TransformComponent tc_01 = new TransformComponent();
-		MovementComponent mc_01 = new MovementComponent();
-		VisualComponent vc_01 = new VisualComponent();
-		CollisionComponent cc_01 = new CollisionComponent();
-
-		// set angle
-		tc_01.setAngle(0);
-
-		// set position
-
-		Vector2 vec2 = new Vector2(center.x, center.y);
-		Vector2 offset = new Vector2(30, 0);
-		tc_01.setPos(tc_01.getPos().cpy().add(offset));
-
-		mc_01.setAngVel(0);
-		mc_01.setVel(new Vector2(0, 0));
-		mc_01.setForce(new Vector2(0, 0));
-		mc_01.setAngAcc(200.0f);
-
-		sc_01.setKeys(0, 1, 2, 3, 4);
-		sc_01.setBulletCounter(0);
-
-		float[] verticesShip = { 0.0f, 25.0f, -20.0f, -20.0f, 0.0f, -14.0f,
-				20.0f, -20.0f };
-
-		vc_01.setVertices(verticesShip);
-		vc_01.setImg(ship_texture);
-
-		cc_01.setColor(Color.GREEN);
-		cc_01.setRadius(20.0f);
-		cc_01.setName("Player 1");
-		cc_01.setGroup(1);
-		// Collision with astroid(4) and bullet(2)
-		cc_01.setMask(3);
-
-		Entity player01_entity = new Entity();
-		player01_entity.add(sc_01);
-		player01_entity.add(tc_01);
-		player01_entity.add(vc_01);
-		player01_entity.add(mc_01);
-		player01_entity.add(cc_01);
-		engine.addEntity(player01_entity);
-	}
-
-	public static void createShip2(Engine engine, Texture ship_texture) {
-
-		// Player02
-		ShipComponent sc_02 = new ShipComponent();
-		TransformComponent tc_02 = new TransformComponent();
-		MovementComponent mc_02 = new MovementComponent();
-		VisualComponent vc_02 = new VisualComponent();
+		ShipComponent shipComponent = new ShipComponent();
+		TransformComponent transform = new TransformComponent();
+		MovementComponent body = new MovementComponent();
+		VisualComponent visual = new VisualComponent();
 		CollisionComponent collider = new CollisionComponent();
 
-		// set angle
-		tc_02.setAngle(0);
+		transform.setAngle(0);
 
-		// set position
-		Vector2 vec2 = new Vector2(center.x, center.y);
-		Vector2 offset = new Vector2(-30, 0);
-		tc_02.setPos(tc_02.getPos().cpy().add(offset));
+		Vector2 offset = new Vector2(posX, posY);
+		transform.setPos(transform.getPos().cpy().add(offset));
 
-		mc_02.setAngVel(0);
-		mc_02.setVel(new Vector2(0, 0));
-		mc_02.setForce(new Vector2(0, 0));
-		mc_02.setAngAcc(200.0f);
+		body.setAngVel(0);
+		body.setVel(new Vector2(0, 0));
+		body.setForce(new Vector2(0, 0));
+		body.setAngAcc(200.0f);
 
-		sc_02.setKeys(5, 6, 7, 8, 9);
-		sc_02.setBulletCounter(0);
+		shipComponent.setKeys(keys[0], keys[1], keys[2], keys[3], keys[4]);
+		shipComponent.setBulletCounter(0);
 
 		float[] verticesShip = { 0.0f, 25.0f, -20.0f, -20.0f, 0.0f, -14.0f,
 				20.0f, -20.0f };
 
-		vc_02.setVertices(verticesShip);
-		vc_02.setImg(ship_texture);
+		visual.setVertices(verticesShip);
+		visual.setImg(ship_texture);
 
-		collider.setColor(Color.YELLOW);
+		collider.setColor(colliderColor);
 		collider.setRadius(20.0f);
-		collider.setName("Player 2");
+		collider.setName(colliderName);
 		collider.setGroup(1);
 		// Collision with astroid(4) and bullet(2)
-		collider.setMask(6);
+		collider.setMask(collisionMask);
 
 		Entity player02_entity = new Entity();
-		player02_entity.add(sc_02);
-		player02_entity.add(tc_02);
-		player02_entity.add(vc_02);
-		player02_entity.add(mc_02);
+		player02_entity.add(shipComponent);
+		player02_entity.add(transform);
+		player02_entity.add(visual);
+		player02_entity.add(body);
 		player02_entity.add(collider);
 		engine.addEntity(player02_entity);
 
