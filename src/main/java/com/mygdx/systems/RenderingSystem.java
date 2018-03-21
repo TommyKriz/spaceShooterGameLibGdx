@@ -37,7 +37,6 @@ public class RenderingSystem extends IteratingSystem {
 	Sprite img = new Sprite();
 
 	boolean renderTexture = true;
-	boolean renderShape = false;
 	boolean renderColliderCircle = true;
 
 	// RAINBOW COLORS
@@ -99,15 +98,6 @@ public class RenderingSystem extends IteratingSystem {
 					collision.getRadius());
 		}
 
-		// render shape
-		if (renderShape) {
-			shapeRenderer.setColor(visual.getColor());
-			shapeRenderer.translate(transform.getPos().x, transform.getPos().y,
-					0);
-			shapeRenderer.rotate(0, 0, 1, transform.getAngle());
-
-			shapeRenderer.polygon(visual.getVertices());
-		}
 		shapeRenderer.end();
 
 	}

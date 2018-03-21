@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class VisualComponent implements Component {
 
 	float[] vertices;
-	private Color color;
 	private Sprite img;
 
 	public Sprite getImg() {
@@ -33,14 +32,6 @@ public class VisualComponent implements Component {
 
 	public float[] getVertices() {
 		return vertices;
-	}
-
-	public void setColor(Color c) {
-		this.color = c;
-	}
-
-	public Color getColor() {
-		return color;
 	}
 
 }

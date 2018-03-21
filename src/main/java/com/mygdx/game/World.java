@@ -53,7 +53,6 @@ public class World {
 				20.0f, -20.0f };
 
 		vc_01.setVertices(verticesShip);
-		vc_01.setColor(Color.PINK);
 		vc_01.setImg(ship_texture);
 
 		cc_01.setColor(Color.GREEN);
@@ -79,7 +78,7 @@ public class World {
 		TransformComponent tc_02 = new TransformComponent();
 		MovementComponent mc_02 = new MovementComponent();
 		VisualComponent vc_02 = new VisualComponent();
-		CollisionComponent cc_02 = new CollisionComponent();
+		CollisionComponent collider = new CollisionComponent();
 
 		// set angle
 		tc_02.setAngle(0);
@@ -101,22 +100,21 @@ public class World {
 				20.0f, -20.0f };
 
 		vc_02.setVertices(verticesShip);
-		vc_02.setColor(Color.RED);
 		vc_02.setImg(ship_texture);
 
-		cc_02.setColor(Color.YELLOW);
-		cc_02.setRadius(20.0f);
-		cc_02.setName("Player 2");
-		cc_02.setGroup(1);
+		collider.setColor(Color.YELLOW);
+		collider.setRadius(20.0f);
+		collider.setName("Player 2");
+		collider.setGroup(1);
 		// Collision with astroid(4) and bullet(2)
-		cc_02.setMask(6);
+		collider.setMask(6);
 
 		Entity player02_entity = new Entity();
 		player02_entity.add(sc_02);
 		player02_entity.add(tc_02);
 		player02_entity.add(vc_02);
 		player02_entity.add(mc_02);
-		player02_entity.add(cc_02);
+		player02_entity.add(collider);
 		engine.addEntity(player02_entity);
 
 	}
@@ -149,7 +147,6 @@ public class World {
 		mc.setVel(new Vector2(0, 1).add(mc.getForce()));
 		mc.setPhysicsInfluence(0.0f);
 
-		vc.setColor(Color.VIOLET);
 		float[] verticesAsteroid = { 15.0f, 15.0f, 0.0f, 20.0f, -15.0f, 15.0f,
 				-20.0f, 0.0f, -15.0f, -15.0f, 0.0f, -20.0f, 15.0f, -15.0f,
 				20.0f, 0.0f // um Nullpunkt zeichnen
@@ -195,7 +192,6 @@ public class World {
 		mc.setVel(velocity.add(mc.getForce()));
 		mc.setPhysicsInfluence(0.0f);
 
-		vc.setColor(Color.VIOLET);
 		float[] verticesAsteroid = { 7.5f, 7.5f, 0.0f, 10.0f, -7.5f, 7.5f,
 				-10.0f, 0.0f, -7.5f, -7.5f, 0.0f, -10.0f, 7.5f, -7.5f, 10.0f,
 				0.0f // um Nullpunkt zeichnen
@@ -240,7 +236,6 @@ public class World {
 		cc.setMask(5);
 		cc.setName("Bullet");
 
-		vc.setColor(Color.GREEN);
 		float[] bulletVertices = { 0.0f, 5.0f, -5.0f, -2.5f, 0.0f, -5.0f, 5.0f,
 				-2.5f };
 		vc.setVertices(bulletVertices);

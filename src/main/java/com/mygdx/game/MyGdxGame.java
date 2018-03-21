@@ -24,13 +24,15 @@ import com.mygdx.systems.RenderingSystem;
 import com.mygdx.systems.ShipSystem;
 
 public class MyGdxGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+
+	private SpriteBatch batch;
+
+	private Texture img;
 	Texture player1_texture;
 	Texture player2_texture;
 	Texture asteroid_big_texture;
 
-	Engine engine;
+	private Engine engine;
 
 	ShipSystem snakesystem;
 	RenderingSystem renderingsystem;
@@ -39,21 +41,32 @@ public class MyGdxGame extends ApplicationAdapter {
 	BulletSystem bulletsystem;
 	AsteroidSystem asteroidsystem;
 
-	Vector2 center;
-
 	@Override
-	// create is called once before rendering
 	public void create() {
+
 		batch = new SpriteBatch();
-		// pixels in a grid form in memory
+
+		initTextures();
+
+		engine = new Engine();
+
+		initSystems();
+		addSystemsToEngine();
+
+		createEntitesInWorld();
+
+		Gdx.input.setInputProcessor(new InputSystem());
+
+	}
+
+	private void initTextures() {
 		img = new Texture("badlogic.jpg");
 		player1_texture = new Texture("player1.png");
 		player2_texture = new Texture("player2.png");
 		asteroid_big_texture = new Texture("asteroid_big.png");
-		center = new Vector2(Gdx.graphics.getWidth() / 2,
-				Gdx.graphics.getHeight() / 2);
+	}
 
-		// SYSTEMS
+	private void initSystems() {
 		renderingsystem = new RenderingSystem(batch, Family.all(
 				VisualComponent.class, TransformComponent.class).get());
 		snakesystem = new ShipSystem(Family.all(ShipComponent.class,
@@ -68,18 +81,18 @@ public class MyGdxGame extends ApplicationAdapter {
 		asteroidsystem = new AsteroidSystem((Family.all(
 				TransformComponent.class, MovementComponent.class,
 				AsteroidComponent.class).get()));
+	}
 
-		engine = new Engine();
-
-		// add systems
+	private void addSystemsToEngine() {
 		engine.addSystem(snakesystem);
 		engine.addSystem(renderingsystem);
 		engine.addSystem(physicsystem);
 		engine.addSystem(collisionsystem);
 		engine.addSystem(bulletsystem);
 		engine.addSystem(asteroidsystem);
+	}
 
-		// create entities in world
+	private void createEntitesInWorld() {
 		World.createShip(engine, player1_texture);
 		World.createShip2(engine, player2_texture);
 		World.createAsteroid(engine, asteroid_big_texture,
@@ -88,19 +101,18 @@ public class MyGdxGame extends ApplicationAdapter {
 				-140));
 		World.createAsteroid(engine, asteroid_big_texture, new Vector2(170,
 				-120));
-
-		Gdx.input.setInputProcessor(new InputSystem());
-
 	}
 
 	@Override
 	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0, 1); // r,g,b,transparency
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		float dt = Gdx.graphics.getDeltaTime();
 		batch.begin();
 		batch.end();
-		GameKeys.update();
+		updateInputAndEngine();
+	}
+
+	private void updateInputAndEngine() {
 		engine.update(Gdx.graphics.getDeltaTime());
 	}
 
