@@ -19,7 +19,7 @@ import com.mygdx.components.VisualComponent;
 
 public class World {
 
-	public static void createShip(Engine engine, Texture ship_texture,
+	public static Entity createShip(Texture ship_texture,
 			int posX, int posY, int[] keys, Color colliderColor,
 			String colliderName, int collisionMask) {
 
@@ -55,13 +55,13 @@ public class World {
 		// Collision with astroid(4) and bullet(2)
 		collider.setMask(collisionMask);
 
-		Entity player02_entity = new Entity();
-		player02_entity.add(shipComponent);
-		player02_entity.add(transform);
-		player02_entity.add(visual);
-		player02_entity.add(body);
-		player02_entity.add(collider);
-		engine.addEntity(player02_entity);
+		Entity player_ship = new Entity();
+		player_ship.add(shipComponent);
+		player_ship.add(transform);
+		player_ship.add(visual);
+		player_ship.add(body);
+		player_ship.add(collider);
+		return player_ship;
 
 	}
 

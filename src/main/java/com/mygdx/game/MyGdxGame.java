@@ -35,7 +35,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private Engine engine;
 
-	ShipSystem snakesystem;
+	ShipSystem shipsystem;
 	RenderingSystem renderingsystem;
 	PhysicsSystem physicsystem;
 	CollisionSystem collisionsystem;
@@ -70,7 +70,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	private void initSystems() {
 		renderingsystem = new RenderingSystem(batch, Family.all(
 				VisualComponent.class, TransformComponent.class).get());
-		snakesystem = new ShipSystem(Family.all(ShipComponent.class,
+		shipsystem = new ShipSystem(Family.all(ShipComponent.class,
 				TransformComponent.class).get());
 		physicsystem = new PhysicsSystem(Family.all(TransformComponent.class,
 				MovementComponent.class).get(), Gdx.graphics.getWidth(),
@@ -85,7 +85,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	private void addSystemsToEngine() {
-		engine.addSystem(snakesystem);
+		engine.addSystem(shipsystem);
 		engine.addSystem(renderingsystem);
 		engine.addSystem(physicsystem);
 		engine.addSystem(collisionsystem);
@@ -95,10 +95,12 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private void createEntitesInWorld() {
 		// TODO: is a different collision mask necessary?
-		World.createShip(engine, player1_texture, 30, 0, new int[] { 0, 1, 2,
-				3, 4 }, Color.YELLOW, "Player 1", 3);
-		World.createShip(engine, player2_texture, -30, 10, new int[] { 5, 6, 7,
-				8, 9 }, Color.PINK, "Player 2", 6);
+
+		engine.addEntity(World.createShip(player1_texture, 30, 0, new int[] {
+				0, 1, 2, 3, 4 }, Color.YELLOW, "Player 1", 3));
+
+		engine.addEntity(World.createShip(player2_texture, -30, 10, new int[] {
+				5, 6, 7, 8, 9 }, Color.PINK, "Player 2", 6));
 
 		World.createAsteroid(engine, asteroid_big_texture,
 				new Vector2(200, 280));
